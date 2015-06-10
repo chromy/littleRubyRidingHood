@@ -8,8 +8,8 @@ littleGirl.location = forest.village
 
 # Whenever she went out, the little girl wore a red riding cloak, so everyone in the village called her Little Red Riding Hood.
 
-littleGirl.isWearing = Cloak.new("color" => "red")
-littleGirl.name = "Little Red Riding Hood"
+littleGirl.clothes.add(Cloak.new(Color.red))
+littleGirl.name = "Little "+littleGirl.clothes.first.color+" Riding Hood"
 
 # One morning, Little Red Riding Hood asked her mother if she could go to visit her grandmother as it had been awhile since they'd seen each other.
 
@@ -31,8 +31,9 @@ littleGirl.basket.isPacked = true
 # When the basket was ready, the little girl put on her red cloak and kissed her mother goodbye.
 
 while littleGirl.basket.isReady != nil
-	littleGirl.isWearing = Cloak.new("color" => "red")
-	littleGirl.kiss(mother,"good bye")
+	littleGirl.wears(littleGirl.clothes.first)
+	littleGirl.kisses(mother,"good bye")
+	littleGirl.basket.isReady = true
 end
 
 # "Remember, go straight to Grandma's house," her mother cautioned.  "Don't dawdle along the way and please don't talk to strangers!  The woods are dangerous."
@@ -68,6 +69,7 @@ darkShadow = Character.new()
 # Suddenly, the wolf appeared beside her.
 
 wolf = darkShadow
+worf.location = littleGirl.location
 
 # "What are you doing out here, little girl?" the wolf asked in a voice as friendly as he could muster.
 
@@ -178,9 +180,12 @@ littleGirl.shouts("Help!  Wolf!")
 # A woodsman who was chopping logs nearby heard her cry and ran towards the cottage as fast as he could.
 
 woodsman = Character.new()
-woodsman.location = forest.grandmothers.near
+woodsman.chops(forest.log(1))
+woodsman.location = forest.grandmothers.cottage + rand(-5 .. 5)
 woodsman.listens()
-woodsman.location.moveToward(littleGirl.location.to_f * Time.new().to_i * 1.0)
+while woodsman.location != forest.grandmothers.cottage
+	woodsman.location.runsToward(forest.grandmothers.cottage,1.0)	
+end
 
 # He grabbed the wolf and made him spit out the poor Grandmother who was a bit frazzled by the whole experience, but still in one piece.
 
