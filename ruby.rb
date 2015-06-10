@@ -69,7 +69,7 @@ darkShadow = Character.new()
 # Suddenly, the wolf appeared beside her.
 
 wolf = darkShadow
-worf.location = littleGirl.location
+wolf.location = littleGirl.location
 
 # "What are you doing out here, little girl?" the wolf asked in a voice as friendly as he could muster.
 
