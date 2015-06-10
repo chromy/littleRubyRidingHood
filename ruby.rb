@@ -3,7 +3,8 @@
 
 # Once upon a time, there was a little girl who lived in a village near the forest.
 forest = Location.new()
-littleGirl = Character.new( "location" => forest.village )
+littleGirl = Character.new()
+littleGirl.location = forest.village
 
 # Whenever she went out, the little girl wore a red riding cloak, so everyone in the village called her Little Red Riding Hood.
 
@@ -178,16 +179,29 @@ woodsman.location = forest.grandmothers.near
 woodsman.listens()
 woodsman.location.moveToward(littleGirl.location.to_f * Time.new().to_i)
 
+# He grabbed the wolf and made him spit out the poor Grandmother who was a bit frazzled by the whole experience, but still in one piece.
 
+grandmother = wolf.stomach.last
+wolf.stomach = wolf.stomach.removeLast()
 
+# "Oh Grandma, I was so scared!"  sobbed Little Red Riding Hood, "I'll never speak to strangers or dawdle in the forest again."
 
+littleGirl.says(grandmother, "Oh Grandma, I was so scared!")
+littleGirl.says(grandmother, "I'll never speak to strangers or dawdle in the forest again.")
 
-He grabbed the wolf and made him spit out the poor Grandmother who was a bit frazzled by the whole experience, but still in one piece.
+# "There, there, child.  You've learned an important lesson.  Thank goodness you shouted loud enough for this kind woodsman to hear you!"
 
-"Oh Grandma, I was so scared!"  sobbed Little Red Riding Hood, "I'll never speak to strangers or dawdle in the forest again."
+grandmother.says(littleGirl,"There, there, child.  You've learned an important lesson.  Thank goodness you shouted loud enough for this kind woodsman to hear you!")
 
-"There, there, child.  You've learned an important lesson.  Thank goodness you shouted loud enough for this kind woodsman to hear you!"
+# The woodsman knocked out the wolf and carried him deep into the forest where he wouldn't bother people any longer.
 
-The woodsman knocked out the wolf and carried him deep into the forest where he wouldn't bother people any longer.
+woodsman.knockout(wolf)
+wolf.isKnockedOut = true
+wolf.location = forest.deep
 
-Little Red Riding Hood and her Grandmother had a nice lunch and a long chat.
+# Little Red Riding Hood and her Grandmother had a nice lunch and a long chat.
+	
+lunch = Lunch.new()
+littleGirl.eat(lunch)
+grandmother.eat(lunch)
+
