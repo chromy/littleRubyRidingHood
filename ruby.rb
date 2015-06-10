@@ -18,7 +18,7 @@ grandmother = Character.new()
 
 morning = true
 while morning
-	littleGirl.asks(mother,grandmother.location)
+	littleGirl.asks(mother,littleGirl.canVisit(grandmother.location))
 	break
 end
 
@@ -26,30 +26,31 @@ end
 
 mother.says(littleGirl,"That's a good idea")
 littleGirl.basket = Basket.new()
+littleGirl.basket.isPacked = true
 
 # When the basket was ready, the little girl put on her red cloak and kissed her mother goodbye.
 
-if littleGirl.basket.isReady
+while littleGirl.basket.isReady != nil
 	littleGirl.isWearing = Cloak.new("color" => "red")
 	littleGirl.kiss(mother,"good bye")
 end
 
 # "Remember, go straight to Grandma's house," her mother cautioned.  "Don't dawdle along the way and please don't talk to strangers!  The woods are dangerous."
 
-mother.says(littleGirl,"Remember, go straight to Grandma's house")
+mother.cautions(littleGirl,"Remember, go straight to Grandma's house")
 mother.says(littleGirl,"Don't dawdle along the way and please don't talk to strangers!  The woods are dangerous.")
 
 # "Don't worry, mommy," said Little Red Riding Hood, "I'll be careful."
 
-littleGirl.kiss(mother,"Don't worry, mommy,")
-littleGirl.kiss(mother,"I'll be careful.")
+littleGirl.says(mother,"Don't worry, mommy,")
+littleGirl.says(mother,"I'll be careful.")
 
 # But when Little Red Riding Hood noticed some lovely flowers in the woods, she forgot her promise to her mother.  
 
-littleGirl.location = forest
+littleGirl.location = forest.woods
 flowers = Flower.new("lovely")
 littleGirl.sees(flowers)
-littleGirl.unset("I'll be careful.")
+littleGirl.memory = littleGirl.memory.sub("I'll be careful.","")
 
 # She picked a few, watched the butterflies flit about for awhile, listened to the frogs croaking and then picked a few more. 
 
@@ -60,7 +61,8 @@ littleGirl.items.add(flowers)
 
 # Little Red Riding Hood was enjoying the warm summer day so much, that she didn't notice a dark shadow approaching out of the forest behind her...
 
-littleGirl.enjoys("warm summer day",10)
+setting = Setting.new("summer","warm","daytime")
+littleGirl.enjoys(setting)
 darkShadow = Character.new()
 
 # Suddenly, the wolf appeared beside her.
@@ -69,16 +71,16 @@ wolf = darkShadow
 
 # "What are you doing out here, little girl?" the wolf asked in a voice as friendly as he could muster.
 
-wolf.says(littleGirl,"What are you doing out here, little girl?")
+wolf.asks(littleGirl,"What are you doing out here, little girl?")
 
 # "I'm on my way to see my Grandma who lives through the forest, near the brook,"  Little Red Riding Hood replied.
 
-littleGirl.says(wolf,"I'm on my way to see my Grandma who lives through the forest, near the brook,")
+littleGirl.replies(wolf,"I'm on my way to see my Grandma who lives through the forest, near the brook,")
 
 # Then she realized how late she was and quickly excused herself, rushing down the path to her Grandma's house. 
 
-littleGirl.isLate = true
-littleGirl.leaves()
+setting.time = "late"
+littleGirl.enjoys(setting)
 littleGirl.location = forest.pathTo(grandmother)
 
 # The wolf, in the meantime, took a shortcut...
@@ -97,7 +99,8 @@ grandmother.says(wolf, "Oh thank goodness dear!  Come in, come in!  I was worrie
 # The wolf let himself in.  Poor Granny did not have time to say another word, before the wolf gobbled her up!
 
 wolf.location = forest.grandmothers.cottage
-wolf.gobbles(grandmother)
+wolf.stomach.add(grandmother)
+grandmother = nil
 
 # The wolf let out a satisfied burp, and then poked through Granny's wardrobe to find a nightgown that he liked.  He added a frilly sleeping cap, and for good measure, dabbed some of Granny's perfume behind his pointy ears.
 
@@ -112,8 +115,8 @@ end
 # A few minutes later, Red Riding Hood knocked on the door.  The wolf jumped into bed and pulled the covers over his nose.  "Who is it?" he called in a cackly voice.
 
 sleep(18000)
-
-wolf.says(littleGirl,"Who is it?","cackly")
+wofl.location = forest.grandmothers.cottage.bed
+wolf.clackles(littleGirl,"Who is it?")
 
 # "It's me, Little Red Riding Hood."
 
@@ -121,20 +124,20 @@ littleGirl.says(wolf as grandmother,"It's me, Little Red Riding Hood.")
 
 # "Oh how lovely!  Do come in, my dear," croaked the wolf.
 
-wolf.says(littleGirl,"Oh how lovely!  Do come in, my dear,")
+wolf.croaks(littleGirl,"Oh how lovely!  Do come in, my dear,")
 
 # When Little Red Riding Hood entered the little cottage, she could scarcely recognize her Grandmother.
 
 littleGirl.location = forest.grandmothers.cottage
-littleGirl.sees(wolf.grandmother)
+littleGirl.sees(wolf as grandmother)
 
 # "Grandmother!  Your voice sounds so odd.  Is something the matter?" she asked.
 
-littleGirl.says(wolf as grandmother,"Grandmother!  Your voice sounds so odd.  Is something the matter?")
+littleGirl.asks(wolf as grandmother,"Grandmother!  Your voice sounds so odd.  Is something the matter?")
 
 # "Oh, I just have touch of a cold," squeaked the wolf adding a cough at the end to prove the point.
 
-wolf.says(littleGirl, "Oh, I just have touch of a cold")
+wolf.squeaks(littleGirl, "Oh, I just have touch of a cold")
 wolf.cough()
 
 # "But Grandmother!  What big ears you have," said Little Red Riding Hood as she edged closer to the bed.
@@ -152,7 +155,7 @@ littleGirl.says(wolf as grandmother, "But Grandmother!  What big eyes you have")
 
 # "The better to see you with, my dear," replied the wolf.
 
-wolf.says(littleGirl, "The better to see you with, my dear,")
+wolf.replies(littleGirl, "The better to see you with, my dear,")
 
 # "But Grandmother!  What big teeth you have," said Little Red Riding Hood her voice quivering slightly.
 
@@ -160,7 +163,7 @@ littleGirl.says(wolf as grandmother, "But Grandmother!  What big teeth you have"
 
 # "The better to eat you with, my dear," roared the wolf and he leapt out of the bed and began to chase the little girl.
 
-wolf.says(littleGirl, "The better to eat you with, my dear")
+wolf.roars(littleGirl, "The better to eat you with, my dear")
 wolf.location.moveToward(littleGirl.location.to_f * Time.new().to_i)
 
 # Almost too late, Little Red Riding Hood realized that the person in the bed was not her Grandmother, but a hungry wolf.
@@ -177,11 +180,12 @@ littleGirl.shouts("Help!  Wolf!")
 woodsman = Character.new()
 woodsman.location = forest.grandmothers.near
 woodsman.listens()
-woodsman.location.moveToward(littleGirl.location.to_f * Time.new().to_i)
+woodsman.location.moveToward(littleGirl.location.to_f * Time.new().to_i * 1.0)
 
 # He grabbed the wolf and made him spit out the poor Grandmother who was a bit frazzled by the whole experience, but still in one piece.
 
 grandmother = wolf.stomach.last
+grandmother.isFrazzled = true
 wolf.stomach = wolf.stomach.removeLast()
 
 # "Oh Grandma, I was so scared!"  sobbed Little Red Riding Hood, "I'll never speak to strangers or dawdle in the forest again."
@@ -195,7 +199,7 @@ grandmother.says(littleGirl,"There, there, child.  You've learned an important l
 
 # The woodsman knocked out the wolf and carried him deep into the forest where he wouldn't bother people any longer.
 
-woodsman.knockout(wolf)
+woodsman.swings()
 wolf.isKnockedOut = true
 wolf.location = forest.deep
 
