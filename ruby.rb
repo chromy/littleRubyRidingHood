@@ -117,7 +117,7 @@ end
 # A few minutes later, Red Riding Hood knocked on the door.  The wolf jumped into bed and pulled the covers over his nose.  "Who is it?" he called in a cackly voice.
 
 sleep(18000)
-wofl.location = forest.grandmothers.cottage.bed
+wolf.location = forest.grandmothers.cottage.bed
 wolf.clackles(littleGirl,"Who is it?")
 
 # "It's me, Little Red Riding Hood."
